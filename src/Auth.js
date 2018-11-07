@@ -1,64 +1,48 @@
-import auth0 from 'auth0-js';
-
 class Auth {
-  constructor() {
-    this.auth0 = new auth0.WebAuth({
-      // the following three lines MUST be updated
-      domain: <YOUR_DOMAIN>,
-      audience: 'https://<YOUR_DOMAIN>/userinfo',
-      clientID: <YOUR_CLIENT_ID>,
-      redirectUri: 'http://localhost:3000/callback',
-      responseType: 'token id_token',
-      scope: 'openid profile'
-    });
-
-    this.getProfile = this.getProfile.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
-    this.signIn = this.signIn.bind(this);
-    this.signOut = this.signOut.bind(this);
+  /**
+   * Returns the first and last name of the user that is logged in
+   * Return null if no user is logged in
+   *
+   * @return {String} [logged in user's first and last name]
+   */
+  getUser() {
+    return "First Last";
   }
 
-  getProfile() {
-    return this.profile;
+  /**
+   * Returns the username of the user that is logged in
+   * Return null if no user is logged in
+   *
+   * @return {String} [logged in user's username]
+   */
+  getUsername() {
+    return "username";
   }
 
-  getIdToken() {
-    return this.idToken;
-  }
-
-  handleAuthentication() {
-    return new Promise((resolve, reject) => {
-      this.auth0.parseHash((err, authResult) => {
-        if (err) return reject(err);
-        if (!authResult || !authResult.idToken) {
-          return reject(err);
-        }
-        this.idToken = authResult.idToken;
-        this.profile = authResult.idTokenPayload;
-        // set the time that the id token will expire at
-        this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
-        resolve();
-      });
-    })
-  }
-
+  /**
+   * Returns true if user is authenticated, false otherwise
+   *
+   * @return {Boolean} [true if user is authenticated, false otherwise]
+   */
   isAuthenticated() {
-    return new Date().getTime() < this.expiresAt;
+    return true;
   }
 
+  /**
+   * Authenticates the user
+   */
   signIn() {
-    this.auth0.authorize();
+
   }
 
+  /**
+   * Logs the user out and clears any saved information if necessary
+   */
   signOut() {
-    // clear id token, profile, and expiration
-    this.idToken = null;
-    this.profile = null;
-    this.expiresAt = null;
+
   }
 }
 
-const auth0Client = new Auth();
+const authClient = new Auth();
 
-export default auth0Client;
+export default authClient;
