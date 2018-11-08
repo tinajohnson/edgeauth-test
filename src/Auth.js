@@ -25,7 +25,7 @@ class Auth {
    * @return {Boolean} [true if user is authenticated, false otherwise]
    */
   isAuthenticated() {
-    return true;
+    return false;
   }
 
   /**
